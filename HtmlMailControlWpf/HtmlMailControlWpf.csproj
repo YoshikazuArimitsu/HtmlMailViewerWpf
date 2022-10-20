@@ -5,6 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+
+    <PackageId>HtmlMailControlWpf</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Y.Arimitsu</Authors>
+    <Company>Y.Arimitsu</Company>    
   </PropertyGroup>
 
 
