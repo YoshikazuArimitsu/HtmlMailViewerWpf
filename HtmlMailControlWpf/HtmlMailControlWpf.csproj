@@ -8,7 +8,7 @@
 
     <PackageId>HtmlMailControlWpf</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.0.5</Version>
+    <Version>0.0.6</Version>
     <Authors>Y.Arimitsu</Authors>
     <Company>Y.Arimitsu</Company>
     <RepositoryUrl>https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf</RepositoryUrl>

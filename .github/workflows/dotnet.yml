@@ -33,12 +33,12 @@ jobs:
         run: dotnet nuget add source --username YoshikazuArimitsu --password "$env:PACKAGE_TOKEN" --store-password-in-clear-text --name github "https://nuget.pkg.github.com/YoshikazuArimitsu/index.json"
 
       - name: Publish GitHub
-        run: dotnet nuget push "artifacts/HtmlMailControlWpf.0.0.5.nupkg"  --api-key "$env:PACKAGE_TOKEN" --source "github"
+        run: dotnet nuget push "artifacts/HtmlMailControlWpf.0.0.6.nupkg"  --api-key "$env:PACKAGE_TOKEN" --source "github"
 
       - name: Publish to NuGet
         uses: brandedoutcast/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: HtmlMailControlWpf/HtmlMailControlWpf.csproj
-          VERSION_REGEX: '^\s*<PackageVersion>(.*)<\/PackageVersion>\s*$'
+          VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
           TAG_FORMAT: "*"
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
