@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [master]
 
+env:
+  PACKAGE_TOKEN: ${{secrets.PACKAGE_TOKEN}}
 jobs:
   build:
     runs-on: windows-latest
@@ -23,3 +25,12 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore
+
+      - name: Pack
+        run: dotnet pack HtmlMailControlWpf --configuration Release -o artifacts/
+
+      - name: GitHub Package Authorization
+        run: dotnet nuget add source --username YoshikazuArimitsu --password "$env:PACKAGE_TOKEN" --store-password-in-clear-text --name github "https://nuget.pkg.github.com/YoshikazuArimitsu/index.json"
+
+      - name: Publish
+        run: dotnet nuget push "artifacts/HtmlMailControlWpf.0.0.1.nupkg"  --api-key "$env:PACKAGE_TOKEN" --source "github"

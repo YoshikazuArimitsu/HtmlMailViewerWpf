@@ -9,7 +9,8 @@
     <PackageId>HtmlMailControlWpf</PackageId>
     <Version>0.0.1</Version>
     <Authors>Y.Arimitsu</Authors>
-    <Company>Y.Arimitsu</Company>    
+    <Company>Y.Arimitsu</Company>
+    <RepositoryUrl>https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf</RepositoryUrl>
   </PropertyGroup>
 
 
