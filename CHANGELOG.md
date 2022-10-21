@@ -27,3 +27,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/compare/v0.0.2...HEAD
 [0.0.2]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.2
+[0.0.4]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.4
