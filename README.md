@@ -29,16 +29,3 @@ HTML 形式のデータを持つ Email ファイル(.eml) を内部で展開し�
 | Source       | eml ファイルのパス                         |
 | Patterns     | リンクに差し替える文字列パターン(string[]) |
 | LinkClicked  | リンククリック時のコールバック             |
-
-## インストール方法
-
-### Visual Studio
-
-[Visual Studio で NuGet パッケージをインストールする](https://learn.microsoft.com/ja-jp/azure/devops/artifacts/nuget/consume?view=azure-devops&tabs=windows#set-up-visual-studio) に従って `https://nuget.pkg.github.com/YoshikazuArimitsu/index.json` をリポジトリソースに追加してください。
-
-ユーザ名・パスワードには GitHub の登録ユーザ名と、[Creating a personal access token](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) で作成したアクセストークンを設定してください。
-(アクセストークンの権限には `read:packages` が付与されている事が必要です)
-
-正しく設定すると、`Nugetパッケージの管理` でパッケージソースを切り替えてアクセスできます。
-
-![package_source.png](./images/package_source.png)
