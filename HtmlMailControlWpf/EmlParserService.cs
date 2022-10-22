@@ -107,7 +107,7 @@ namespace HtmlMailControlWpf
                     {
                         // cid:* をファイル名に置換
                         var cid = imgSrc.Substring(4);
-                        string? fileName;
+                        string fileName;
                         if (cidDictionary.TryGetValue(cid, out fileName))
                         {
                             imgNode.SetAttribute("src", fileName);

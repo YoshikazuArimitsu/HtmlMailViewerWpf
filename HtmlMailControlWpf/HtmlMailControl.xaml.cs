@@ -38,10 +38,10 @@ namespace HtmlMailControlWpf
     [ComVisible(true)]
     public class HtmlMailControlHostedObject
     {
-        public HtmlMailControl? HtmlMailControl { get; set; }
+        public HtmlMailControl HtmlMailControl { get; set; }
         public void HostCallback(string strText)
         {
-            HtmlMailControl?.HostCallback(strText);
+            HtmlMailControl.HostCallback(strText);
         }
     }
 
@@ -118,9 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ";
 
-        private Task<string>? _embedScriptId;
+        private Task<string> _embedScriptId;
         private HtmlMailControlHostedObject _hostedObject;
-        private EmlContent? _eml;
+        private EmlContent _eml;
 
         /// <summary>
         /// 開くEMLファイルのパス
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             _embedScriptId = webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(script);
         }
 
-        private void WebView_CoreWebView2InitializationCompleted(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
+        private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             webView.CoreWebView2.AddHostObjectToScript("class", _hostedObject);
             webView.EnsureCoreWebView2Async();
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         private static void OnSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            HtmlMailControl? ctrl = obj as HtmlMailControl;
+            HtmlMailControl ctrl = obj as HtmlMailControl;
             if (ctrl != null)
             {
                 var es = new EmlParserService();

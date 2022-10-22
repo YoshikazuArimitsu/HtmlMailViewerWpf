@@ -1,14 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
 
     <PackageId>HtmlMailControlWpf</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.0.8</Version>
+    <Version>0.0.9</Version>
     <Authors>Y.Arimitsu</Authors>
     <Company>Y.Arimitsu</Company>
     <RepositoryUrl>https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf</RepositoryUrl>
