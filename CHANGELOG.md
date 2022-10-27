@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.10] - 2022-10-27
+## [0.0.11] - 2022-10-27
 
 ### Changed
 
@@ -45,4 +45,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.0.2]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.2
 [0.0.8]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.8
 [0.0.9]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.9
-[0.0.10]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.10
+[0.0.11]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.11
