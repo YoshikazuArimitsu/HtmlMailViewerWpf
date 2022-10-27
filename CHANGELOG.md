@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.10] - 2022-10-27
+
+### Changed
+
+- リンクを開いた時、OS機能で開くよう修正
+
+### Fixed
+
+- Patterns = null の時、置換パターンに空配列が渡るよう修正
+
 ## [0.0.9] - 2022-10-22
 
 ### Changed
@@ -34,4 +44,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [unreleased]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/compare/v0.0.2...HEAD
 [0.0.2]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.2
 [0.0.8]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.8
-[0.0.8]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.9
+[0.0.9]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.9
+[0.0.10]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.10
