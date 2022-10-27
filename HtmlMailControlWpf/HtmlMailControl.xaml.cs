@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -201,8 +202,22 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             webView.CoreWebView2InitializationCompleted += WebView_CoreWebView2InitializationCompleted;
+            webView.NavigationStarting += WebView_NavigationStarting;
         }
 
+        private void WebView_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
+        {
+            // ローカルファイル以外のURLはOSで開く
+            if (null != e.Uri && e.Uri.StartsWith("file://") == false)
+            {
+                e.Cancel = true;
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = e.Uri,
+                    UseShellExecute = true
+                });
+            }
+        }
 
         private void updateEmbedScript()
         {
@@ -211,7 +226,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 webView.CoreWebView2.RemoveScriptToExecuteOnDocumentCreated(_embedScriptId.Result);
             }
 
-            var initLine = $"const callbackPatterns = ['{string.Join("','", Patterns)}'];\r\n";
+            Func<string> makePattern = () =>
+            {
+                return (Patterns == null || Patterns.Count() == 0) ? "[]" : $"['{string.Join("','", Patterns)}']";
+            };
+
+
+            var initLine = $"const callbackPatterns = {makePattern()};\r\n";
             var script = initLine + EMBED_SCRIPT;
 
             _embedScriptId = webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(script);
@@ -223,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             webView.EnsureCoreWebView2Async();
             updateEmbedScript();
         }
+
 
         /// <summary>
         /// DataContext変更ハンドラ
