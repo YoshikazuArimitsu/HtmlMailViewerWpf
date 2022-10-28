@@ -8,10 +8,34 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
         <hmv:HtmlMailControl 
-            SourceType="BodyText"
+            Grid.Column="0"
+            SourceType="{Binding SourceType}"
             Source="{Binding Source}"
             Patterns="{Binding LinkPatterns}"
-            LinkClicked="EmlView_LinkClicked"/>
+            LinkClicked="EmlView_LinkClicked" Margin="0,0,20,0"/>
+        
+        <StackPanel
+            Grid.Column="1"
+            >
+            <Label>SourceType</Label>
+            <ComboBox
+                ItemsSource="{Binding Source, Source={local:SourceTypeEnumSourceProvider}}"
+                SelectedValue="{Binding SourceType}"
+                DisplayMemberPath="Name" 
+                SelectedValuePath="Code"/>
+
+            <Label>Source</Label>
+            <TextBox Text="{Binding Source, Mode=TwoWay}"
+                     AcceptsReturn="True"/>
+
+            <Label>LinkPatterns</Label>
+            <TextBox Text="{Binding LinkPatternsStr, Mode=TwoWay}"/>
+
+        </StackPanel>
     </Grid>
 </Window>

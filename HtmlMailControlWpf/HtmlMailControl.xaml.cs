@@ -144,7 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         public static readonly DependencyProperty SourceTypeProperty =
-            DependencyProperty.Register("SourceType", typeof(SourceType), typeof(HtmlMailControl), new PropertyMetadata(SourceType.EmlFile));
+            DependencyProperty.Register("SourceType", typeof(SourceType), typeof(HtmlMailControl),
+                    new FrameworkPropertyMetadata(SourceType.EmlFile, new PropertyChangedCallback(OnSourceChanged)));
 
         /// <summary>
         /// 開くEMLファイルのパス
@@ -163,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.Register("Source", typeof(string), typeof(HtmlMailControl),
-                        new FrameworkPropertyMetadata("Source", new PropertyChangedCallback(OnSourceChanged)));
+                    new FrameworkPropertyMetadata("Source", new PropertyChangedCallback(OnSourceChanged)));
 
         /// <summary>
         /// 開くURL
@@ -199,7 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         public static readonly DependencyProperty PatternProperty =
-            DependencyProperty.Register("Patterns", typeof(string[]), typeof(HtmlMailControl), new PropertyMetadata(new string[0]));
+            DependencyProperty.Register("Patterns", typeof(string[]), typeof(HtmlMailControl),
+                new FrameworkPropertyMetadata(new string[0], new PropertyChangedCallback(OnPatternChanged)));
 
         /// <summary>
         /// 置換リンクを踏んだ時のイベント
@@ -245,6 +247,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         private void updateEmbedScript()
         {
+            if(webView.CoreWebView2 == null)
+            {
+                return;
+            }
+
             if (_embedScriptId != null)
             {
                 webView.CoreWebView2.RemoveScriptToExecuteOnDocumentCreated(_embedScriptId.Result);
@@ -319,5 +326,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        private static void OnPatternChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            HtmlMailControl ctrl = obj as HtmlMailControl;
+
+            if (ctrl != null && ctrl.webView.CoreWebView2 != null)
+            {
+                ctrl.updateEmbedScript();
+                ctrl.webView.Reload();
+            }
+        }
+
+
     }
 }
