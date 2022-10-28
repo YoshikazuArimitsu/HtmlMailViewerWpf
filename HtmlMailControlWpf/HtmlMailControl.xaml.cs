@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlMailControlWpf.ContentProvider;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,6 +18,12 @@ using System.Windows.Shapes;
 
 namespace HtmlMailControlWpf
 {
+    public enum SourceType
+    {
+        EmlFile,
+        BodyText
+    }
+
     public class LinkClickedEventArgs : RoutedEventArgs
     {
         private readonly string _href;
@@ -121,7 +128,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         private Task<string> _embedScriptId;
         private HtmlMailControlHostedObject _hostedObject;
-        private EmlContent _eml;
+        private Content _content;
+
+        /// 
+        public SourceType SourceType
+        {
+            get
+            {
+                return (SourceType)GetValue(SourceTypeProperty);
+            }
+            set
+            {
+                SetValue(SourceTypeProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty SourceTypeProperty =
+            DependencyProperty.Register("SourceType", typeof(SourceType), typeof(HtmlMailControl), new PropertyMetadata(SourceType.EmlFile));
 
         /// <summary>
         /// 開くEMLファイルのパス
@@ -177,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         public static readonly DependencyProperty PatternProperty =
             DependencyProperty.Register("Patterns", typeof(string[]), typeof(HtmlMailControl), new PropertyMetadata(new string[0]));
+
         /// <summary>
         /// 置換リンクを踏んだ時のイベント
         /// </summary>
@@ -273,11 +297,26 @@ document.addEventListener('DOMContentLoaded', () => {
         private static void OnSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             HtmlMailControl ctrl = obj as HtmlMailControl;
+
             if (ctrl != null)
             {
-                var es = new EmlParserService();
-                ctrl._eml = es.ParseEmlFile(ctrl.Source);
-                ctrl.SourceUri = ctrl._eml.HtmlUri;
+                switch(ctrl.SourceType)
+                {
+                    case SourceType.EmlFile:
+                        var es = new EmlParserService();
+                        ctrl._content = es.ParseFile(ctrl.Source);
+                        ctrl.SourceUri = ctrl._content.HtmlUri;
+                        break;
+
+                    case SourceType.BodyText:
+                        var ps = new PlainContentService();
+                        ctrl._content = ps.ParseData(ctrl.Source);
+                        ctrl.SourceUri = ctrl._content.HtmlUri;
+                        break;
+
+                    default:
+                        throw new InvalidOperationException("Unknown SourceType");
+                }
             }
         }
     }

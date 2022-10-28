@@ -8,7 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <hmv:HtmlMailControl Source="{Binding Source}" Patterns="{Binding LinkPatterns}" LinkClicked="EmlView_LinkClicked"/>
-
+        <hmv:HtmlMailControl 
+            SourceType="BodyText"
+            Source="{Binding Source}"
+            Patterns="{Binding LinkPatterns}"
+            LinkClicked="EmlView_LinkClicked"/>
     </Grid>
 </Window>

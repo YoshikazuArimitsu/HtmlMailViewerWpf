@@ -8,54 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HtmlMailControlWpf
+namespace HtmlMailControlWpf.ContentProvider
 {
-    public class EmlContent : IDisposable
-    {
-        public string BaseDir { get; set; }
-        public string HtmlUri { get; set; }
-
-        public EmlContent()
-        {
-            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-            Directory.CreateDirectory(tempDirectory);
-            BaseDir = tempDirectory;
-            HtmlUri = new System.Uri(Path.Combine(BaseDir, "index.html")).AbsoluteUri;
-        }
-
-        public static void RecursiveDelete(DirectoryInfo baseDir)
-        {
-            if (!baseDir.Exists)
-                return;
-
-            foreach (var dir in baseDir.EnumerateDirectories())
-            {
-                RecursiveDelete(dir);
-            }
-            var files = baseDir.GetFiles();
-            foreach (var file in files)
-            {
-                file.IsReadOnly = false;
-                file.Delete();
-            }
-            baseDir.Delete();
-        }
-
-        public void Dispose()
-        {
-            RecursiveDelete(new DirectoryInfo(BaseDir));
-        }
-    }
-
-    public class EmlParserService
+    public class EmlParserService : IContentProvider
     {
         public EmlParserService()
         {
         }
 
-        public EmlContent Parse(Stream stream)
+        public Content Parse(Stream stream)
         {
-            var content = new EmlContent();
+            var content = new Content();
             var mimeMessage = MimeMessage.Load(stream);
 
             var htmlStream = new MemoryStream();
@@ -124,13 +87,16 @@ namespace HtmlMailControlWpf
             return content;
         }
 
-        public EmlContent ParseEmlFile(string path)
+        public Content ParseFile(string path)
         {
             using (var fs = File.OpenRead(path))
             {
                 return Parse(fs);
             }
         }
-
+        public Content ParseData(string data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
