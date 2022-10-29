@@ -17,9 +17,7 @@ namespace HtmlMailControlWpf.ContentProvider
             {
                 outputFile.WriteLine(@$"
 <html lang='ja'>
-  <pre>
-    {data}
-  </pre>
+  <pre>{data}</pre>
 </html>
 ");
             }

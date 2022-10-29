@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- プレーンテキストの表示対応(BodyTextモード)
+
+### Changed
+
+- アンカーをボタンに変更？
+
 ## [0.0.11] - 2022-10-27
 
 ### Changed

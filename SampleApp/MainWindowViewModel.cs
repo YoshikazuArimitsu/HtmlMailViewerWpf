@@ -81,16 +81,30 @@ namespace SampleApp
             }
         }
 
-        public string? _source;
-        public string? Source
+        public string? _emlFile;
+        public string? EmlFile
         {
             get
             {
-                return _source;
+                return _emlFile;
             }
             set
             {
-                _source = value;
+                _emlFile = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string? _bodyText;
+        public string? BodyText
+        {
+            get
+            {
+                return _bodyText;
+            }
+            set
+            {
+                _bodyText = value;
                 NotifyPropertyChanged();
             }
         }
@@ -104,7 +118,8 @@ namespace SampleApp
             _settings = settings.Value;
 
             SourceType = SourceType.EmlFile;
-            Source = _settings.EmlFile;
+            EmlFile = _settings.EmlFile;
+            BodyText= _settings.BodyText;
             LinkPatterns = _settings.LinkPatterns;
             LinkPatternsStr = string.Join(",", LinkPatterns ?? new string[0]);
         }

@@ -15,12 +15,14 @@
         <hmv:HtmlMailControl 
             Grid.Column="0"
             SourceType="{Binding SourceType}"
-            Source="{Binding Source}"
+            EmlFile="{Binding EmlFile}"
+            BodyText="{Binding BodyText}"
             Patterns="{Binding LinkPatterns}"
             LinkClicked="EmlView_LinkClicked" Margin="0,0,20,0"/>
         
         <StackPanel
             Grid.Column="1"
+            Width="240"
             >
             <Label>SourceType</Label>
             <ComboBox
@@ -29,8 +31,12 @@
                 DisplayMemberPath="Name" 
                 SelectedValuePath="Code"/>
 
-            <Label>Source</Label>
-            <TextBox Text="{Binding Source, Mode=TwoWay}"
+            <Label>EmlFile</Label>
+            <TextBox Text="{Binding EmlFile, Mode=TwoWay}"/>
+
+            <Label>BodyText</Label>
+            <TextBox Text="{Binding BodyText, Mode=TwoWay}"
+                     MinHeight="80"
                      AcceptsReturn="True"/>
 
             <Label>LinkPatterns</Label>

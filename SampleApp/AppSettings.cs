@@ -9,6 +9,7 @@ namespace SampleApp
     public class AppSettings
     {
         public string? EmlFile { get; set; }
+        public string? BodyText { get; set; }
         public string[]? LinkPatterns { get; set; }
     }
 }
