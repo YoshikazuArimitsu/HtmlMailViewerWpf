@@ -18,14 +18,18 @@ HTML 形式のデータを持つ Email ファイル(.eml) を内部で展開し�
         xmlns:hmv="clr-namespace:HtmlMailControlWpf;assembly=HtmlMailControlWpf">
     <Grid>
         <hmv:HtmlMailControl
-            Source="{Binding Source}"
-            Patterns="{Binding LinkPatterns}" LinkClicked="EmlView_LinkClicked"/>
+            SourceType={"Binding SourceType}"}
+            EmlFile="{Binding EmlFile}"
+            Patterns="{Binding LinkPatterns}"
+            LinkClicked="EmlView_LinkClicked"/>
     </Grid>
 </Window>
 ```
 
 | プロパティ名 | 説明                                       |
 | :----------- | :----------------------------------------- |
-| Source       | eml ファイルのパス                         |
+| SourceType   | 表示データ(EmlFile/BodyText)               |
+| EmlFile      | eml ファイルのパス                         |
+| BodyText     | テキストデータ(SourceType=BodyText)        |
 | Patterns     | リンクに差し替える文字列パターン(string[]) |
 | LinkClicked  | リンククリック時のコールバック             |

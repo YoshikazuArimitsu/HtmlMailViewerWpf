@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlMailControlWpf.ContentProvider;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,6 +18,18 @@ using System.Windows.Shapes;
 
 namespace HtmlMailControlWpf
 {
+    /// <summary>
+    /// モード
+    /// </summary>
+    public enum SourceType
+    {
+        EmlFile,
+        BodyText
+    }
+
+    /// <summary>
+    /// リンク押下時イベント
+    /// </summary>
     public class LinkClickedEventArgs : RoutedEventArgs
     {
         private readonly string _href;
@@ -90,8 +103,11 @@ const replaceTextNode = (n, p) => {
     const beforeNode = n.cloneNode();
     beforeNode.textContent = splitContent[0];
 
-    const anchorNode = document.createElement('a');
-    anchorNode.href = `javascript:hostCallback('${p}');`;
+    //const anchorNode = document.createElement('a');
+    //anchorNode.href = `javascript:hostCallback('${p}');`;
+    //anchorNode.textContent = p;
+    const anchorNode = document.createElement('button');
+    anchorNode.onclick = `javascript:hostCallback('${p}');`;
     anchorNode.textContent = p;
 
     const afterNode = n.cloneNode();
@@ -121,26 +137,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
         private Task<string> _embedScriptId;
         private HtmlMailControlHostedObject _hostedObject;
-        private EmlContent _eml;
+        private Content _content;
 
         /// <summary>
-        /// 開くEMLファイルのパス
+        /// 動作モード
         /// </summary>
-        public string Source
+        public SourceType SourceType
         {
             get
             {
-                return (string)GetValue(SourceProperty);
+                return (SourceType)GetValue(SourceTypeProperty);
             }
             set
             {
-                SetValue(SourceProperty, value);
+                SetValue(SourceTypeProperty, value);
             }
         }
 
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(string), typeof(HtmlMailControl),
-                        new FrameworkPropertyMetadata("Source", new PropertyChangedCallback(OnSourceChanged)));
+        public static readonly DependencyProperty SourceTypeProperty =
+            DependencyProperty.Register("SourceType", typeof(SourceType), typeof(HtmlMailControl),
+                    new FrameworkPropertyMetadata(SourceType.EmlFile, new PropertyChangedCallback(OnSourceChanged)));
+
+        /// <summary>
+        /// 開くEMLファイルのパス(EmlFile用)
+        /// </summary>
+        public string EmlFile
+        {
+            get
+            {
+                return (string)GetValue(EmlFileProperty);
+            }
+            set
+            {
+                SetValue(EmlFileProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty EmlFileProperty =
+            DependencyProperty.Register("EmlFile", typeof(string), typeof(HtmlMailControl),
+                    new FrameworkPropertyMetadata("EmlFile", new PropertyChangedCallback(OnSourceChanged)));
+
+
+        /// <summary>
+        /// テキストデータ(BodyText用)
+        /// </summary>
+        public string BodyText
+        {
+            get
+            {
+                return (string)GetValue(BodyTextProperty);
+            }
+            set
+            {
+                SetValue(BodyTextProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty BodyTextProperty =
+            DependencyProperty.Register("BodyText", typeof(string), typeof(HtmlMailControl),
+                    new FrameworkPropertyMetadata("BodyText", new PropertyChangedCallback(OnSourceChanged)));
 
         /// <summary>
         /// 開くURL
@@ -176,7 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         public static readonly DependencyProperty PatternProperty =
-            DependencyProperty.Register("Patterns", typeof(string[]), typeof(HtmlMailControl), new PropertyMetadata(new string[0]));
+            DependencyProperty.Register("Patterns", typeof(string[]), typeof(HtmlMailControl),
+                new FrameworkPropertyMetadata(new string[0], new PropertyChangedCallback(OnPatternChanged)));
+
         /// <summary>
         /// 置換リンクを踏んだ時のイベント
         /// </summary>
@@ -192,6 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
             remove { RemoveHandler(LinkClickedEvent, value); }
         }
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public HtmlMailControl()
         {
             InitializeComponent();
@@ -205,6 +265,11 @@ document.addEventListener('DOMContentLoaded', () => {
             webView.NavigationStarting += WebView_NavigationStarting;
         }
 
+        /// <summary>
+        /// ナビゲーションイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WebView_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
         {
             // ローカルファイル以外のURLはOSで開く
@@ -219,8 +284,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        /// <summary>
+        /// 埋め込みスクリプトの更新
+        /// </summary>
         private void updateEmbedScript()
         {
+            if(webView.CoreWebView2 == null)
+            {
+                return;
+            }
+
             if (_embedScriptId != null)
             {
                 webView.CoreWebView2.RemoveScriptToExecuteOnDocumentCreated(_embedScriptId.Result);
@@ -238,6 +311,11 @@ document.addEventListener('DOMContentLoaded', () => {
             _embedScriptId = webView.CoreWebView2.AddScriptToExecuteOnDocumentCreatedAsync(script);
         }
 
+        /// <summary>
+        /// CoreWebView初期化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             webView.CoreWebView2.AddHostObjectToScript("class", _hostedObject);
@@ -270,15 +348,55 @@ document.addEventListener('DOMContentLoaded', () => {
             RaiseEvent(eventArgs);
         }
 
+        /// <summary>
+        /// Source変更
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         private static void OnSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             HtmlMailControl ctrl = obj as HtmlMailControl;
+
             if (ctrl != null)
             {
-                var es = new EmlParserService();
-                ctrl._eml = es.ParseEmlFile(ctrl.Source);
-                ctrl.SourceUri = ctrl._eml.HtmlUri;
+                switch(ctrl.SourceType)
+                {
+                    case SourceType.EmlFile:
+                        var es = new EmlParserService();
+                        ctrl._content = es.ParseFile(ctrl.EmlFile);
+                        ctrl.SourceUri = ctrl._content.HtmlUri;
+                        break;
+
+                    case SourceType.BodyText:
+                        var ps = new PlainContentService();
+                        ctrl._content = ps.ParseData(ctrl.BodyText);
+                        ctrl.SourceUri = ctrl._content.HtmlUri;
+                        break;
+
+                    default:
+                        throw new InvalidOperationException("Unknown SourceType");
+                }
             }
         }
+
+        /// <summary>
+        /// LinkPattern変更イベント
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnPatternChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            HtmlMailControl ctrl = obj as HtmlMailControl;
+
+            if (ctrl != null && ctrl.webView.CoreWebView2 != null)
+            {
+                // CoreWebView初期化済みなら埋め込みスクリプトを更新してリロード
+                ctrl.updateEmbedScript();
+                ctrl.webView.Reload();
+            }
+        }
+
+
     }
 }
