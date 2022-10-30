@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.12] - 2022-10-30
+
 ### Added
 
 - プレーンテキストの表示対応(BodyTextモード)
@@ -49,8 +51,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 初版
 
-[unreleased]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/compare/v0.0.2...HEAD
+[unreleased]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/compare/v0.0.12...HEAD
 [0.0.2]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.2
 [0.0.8]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.8
 [0.0.9]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.9
 [0.0.11]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.11
+[0.0.12]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.12

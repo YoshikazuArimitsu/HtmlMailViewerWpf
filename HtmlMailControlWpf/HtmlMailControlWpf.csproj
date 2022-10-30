@@ -6,7 +6,7 @@
 
     <PackageId>HtmlMailControlWpf</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.0.11</Version>
+    <Version>0.0.12</Version>
     <Authors>Y.Arimitsu</Authors>
     <Company>Y.Arimitsu</Company>
     <RepositoryUrl>https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf</RepositoryUrl>
@@ -17,9 +17,5 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1370.28" />
     <PackageReference Include="AngleSharp" Version="0.16.1" />
     <PackageReference Include="MimeKit" Version="3.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
