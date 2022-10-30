@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.13] - 2022-10-30
+
+### Changed
+
+- 不正なパスが指定された時は無視する。
+
 ## [0.0.12] - 2022-10-30
 
 ### Added

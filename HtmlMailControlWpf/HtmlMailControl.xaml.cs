@@ -364,8 +364,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 {
                     case SourceType.EmlFile:
                         var es = new EmlParserService();
-                        ctrl._content = es.ParseFile(ctrl.EmlFile);
-                        ctrl.SourceUri = ctrl._content.HtmlUri;
+                        try
+                        {
+                            ctrl._content = es.ParseFile(ctrl.EmlFile);
+                            ctrl.SourceUri = ctrl._content.HtmlUri;
+                        } catch(Exception ex)
+                        {
+                            Debug.WriteLine($"Parse eml failed, Ignore. {ex.Message}");
+                        }
                         break;
 
                     case SourceType.BodyText:
