@@ -3,8 +3,8 @@ name: .NET
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
+  #pull_request:
+  #  branches: [master]
 
 env:
   PACKAGE_TOKEN: ${{secrets.PACKAGE_TOKEN}}
