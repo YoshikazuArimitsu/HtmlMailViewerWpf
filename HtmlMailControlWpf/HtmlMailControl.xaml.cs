@@ -104,11 +104,8 @@ const replaceTextNode = (n, p) => {
     const beforeNode = n.cloneNode();
     beforeNode.textContent = splitContent[0];
 
-    //const anchorNode = document.createElement('a');
-    //anchorNode.href = `javascript:hostCallback('${p}');`;
-    //anchorNode.textContent = p;
-    const anchorNode = document.createElement('button');
-    anchorNode.onclick = `javascript:hostCallback('${p}');`;
+    const anchorNode = document.createElement('a');
+    anchorNode.href = `javascript:hostCallback('${p}');`;
     anchorNode.textContent = p;
 
     const afterNode = n.cloneNode();
