@@ -28,8 +28,8 @@ HTML 形式のデータを持つ Email ファイル(.eml) を内部で展開し�
 
 | プロパティ名 | 説明                                       |
 | :----------- | :----------------------------------------- |
-| SourceType   | 表示データ(EmlFile/BodyText)               |
+| SourceType   | 表示データ(EmlFile/BodyText/BodyHtml)      |
 | EmlFile      | eml ファイルのパス                         |
-| BodyText     | テキストデータ(SourceType=BodyText)        |
+| Body         | テキストデータ(SourceType=BodyText/BodyHtml) |
 | Patterns     | リンクに差し替える文字列パターン(string[]) |
 | LinkClicked  | リンククリック時のコールバック             |

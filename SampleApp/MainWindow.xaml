@@ -16,7 +16,7 @@
             Grid.Column="0"
             SourceType="{Binding SourceType}"
             EmlFile="{Binding EmlFile}"
-            BodyText="{Binding BodyText}"
+            Body="{Binding Body}"
             Patterns="{Binding LinkPatterns}"
             LinkClicked="EmlView_LinkClicked" Margin="0,0,20,0"/>
         
@@ -34,8 +34,8 @@
             <Label>EmlFile</Label>
             <TextBox Text="{Binding EmlFile, Mode=TwoWay}"/>
 
-            <Label>BodyText</Label>
-            <TextBox Text="{Binding BodyText, Mode=TwoWay}"
+            <Label>Body</Label>
+            <TextBox Text="{Binding Body, Mode=TwoWay}"
                      MinHeight="80"
                      AcceptsReturn="True"/>
 

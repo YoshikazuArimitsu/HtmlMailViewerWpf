@@ -24,7 +24,8 @@ namespace HtmlMailControlWpf
     public enum SourceType
     {
         EmlFile,
-        BodyText
+        BodyText,
+        BodyHtml
     }
 
     /// <summary>
@@ -103,11 +104,8 @@ const replaceTextNode = (n, p) => {
     const beforeNode = n.cloneNode();
     beforeNode.textContent = splitContent[0];
 
-    //const anchorNode = document.createElement('a');
-    //anchorNode.href = `javascript:hostCallback('${p}');`;
-    //anchorNode.textContent = p;
-    const anchorNode = document.createElement('button');
-    anchorNode.onclick = `javascript:hostCallback('${p}');`;
+    const anchorNode = document.createElement('a');
+    anchorNode.href = `javascript:hostCallback('${p}');`;
     anchorNode.textContent = p;
 
     const afterNode = n.cloneNode();
@@ -179,23 +177,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         /// <summary>
-        /// テキストデータ(BodyText用)
+        /// テキストデータ(BodyText/Html用)
         /// </summary>
-        public string BodyText
+        public string Body
         {
             get
             {
-                return (string)GetValue(BodyTextProperty);
+                return (string)GetValue(BodyProperty);
             }
             set
             {
-                SetValue(BodyTextProperty, value);
+                SetValue(BodyProperty, value);
             }
         }
 
-        public static readonly DependencyProperty BodyTextProperty =
-            DependencyProperty.Register("BodyText", typeof(string), typeof(HtmlMailControl),
-                    new FrameworkPropertyMetadata("BodyText", new PropertyChangedCallback(OnSourceChanged)));
+        public static readonly DependencyProperty BodyProperty =
+            DependencyProperty.Register("Body", typeof(string), typeof(HtmlMailControl),
+                    new FrameworkPropertyMetadata("Body", new PropertyChangedCallback(OnSourceChanged)));
 
         /// <summary>
         /// 開くURL
@@ -376,7 +374,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     case SourceType.BodyText:
                         var ps = new PlainContentService();
-                        ctrl._content = ps.ParseData(ctrl.BodyText);
+                        ctrl._content = ps.ParseData(ctrl.Body);
+                        ctrl.SourceUri = ctrl._content.HtmlUri;
+                        break;
+
+                    case SourceType.BodyHtml:
+                        var hs = new HtmlContentService();
+                        ctrl._content = hs.ParseData(ctrl.Body);
                         ctrl.SourceUri = ctrl._content.HtmlUri;
                         break;
 

@@ -95,16 +95,16 @@ namespace SampleApp
             }
         }
 
-        public string? _bodyText;
-        public string? BodyText
+        public string? _body;
+        public string? Body
         {
             get
             {
-                return _bodyText;
+                return _body;
             }
             set
             {
-                _bodyText = value;
+                _body = value;
                 NotifyPropertyChanged();
             }
         }
@@ -119,7 +119,7 @@ namespace SampleApp
 
             SourceType = SourceType.EmlFile;
             EmlFile = _settings.EmlFile;
-            BodyText= _settings.BodyText;
+            Body = _settings.Body;
             LinkPatterns = _settings.LinkPatterns;
             LinkPatternsStr = string.Join(",", LinkPatterns ?? new string[0]);
         }
