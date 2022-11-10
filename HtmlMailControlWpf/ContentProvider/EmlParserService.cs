@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Html;
+using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using MimeKit;
 using System;
@@ -14,6 +15,20 @@ namespace HtmlMailControlWpf.ContentProvider
     {
         public EmlParserService()
         {
+        }
+
+        private string getCharset(IHtmlDocument doc)
+        {
+            var contentType = doc.QuerySelector("meta[http-equiv='Content-Type']")?.GetAttribute("content");
+
+            if(contentType != null)
+            {
+                if(contentType.ToLower().Contains("iso-2022-jp")) {
+                    return "iso-2022-jp";
+                }
+            }
+
+            return "utf-8";
         }
 
         public Content Parse(Stream stream)
@@ -62,6 +77,8 @@ namespace HtmlMailControlWpf.ContentProvider
                 var parser = new HtmlParser();
                 var doc = parser.ParseDocument(htmlStream);
 
+                var charset = getCharset(doc);
+
                 var imgNodes = doc.QuerySelectorAll("img");
                 foreach (var imgNode in imgNodes)
                 {
@@ -78,7 +95,8 @@ namespace HtmlMailControlWpf.ContentProvider
                     }
                 }
 
-                using (StreamWriter outputFile = new StreamWriter(Path.Combine(content.BaseDir, "index.html")))
+                using (StreamWriter outputFile = new StreamWriter(Path.Combine(content.BaseDir, "index.html"), false,
+                     System.Text.Encoding.GetEncoding(charset)))
                 {
                     doc.ToHtml(outputFile, new PrettyMarkupFormatter());
                 }
