@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/SampleApp/data/22715.eml
+/SampleApp/data/22714.eml
+/SampleApp/data/22704.eml

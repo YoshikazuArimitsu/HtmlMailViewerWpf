@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.15] - 2022-11-11
+
+### Changed
+
+- <meta> タグの Content-Type での指定Encodingに対応
+	- unicode
+	- iso-2022-jp
+	- shift_jis
+	- euc-jp
+	- utf-8
+
 ## [0.0.14] - 2022-11-02
 
 ### Added
@@ -75,3 +86,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.0.12]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.12
 [0.0.13]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.13
 [0.0.14]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.14
+[0.0.15]: https://github.com/YoshikazuArimitsu/HtmlMailViewerWpf/releases/tag/v0.0.15
