@@ -23,8 +23,20 @@ namespace HtmlMailControlWpf.ContentProvider
 
             if(contentType != null)
             {
-                if(contentType.ToLower().Contains("iso-2022-jp")) {
+                if (contentType.ToLower().Contains("unicode"))
+                {
+                    return "unicode";
+                }
+                if (contentType.ToLower().Contains("iso-2022-jp")) {
                     return "iso-2022-jp";
+                }
+                if (contentType.ToLower().Contains("shift_jis"))
+                {
+                    return "shift_jis";
+                }
+                if (contentType.ToLower().Contains("euc-jp"))
+                {
+                    return "euc-jp";
                 }
             }
 
