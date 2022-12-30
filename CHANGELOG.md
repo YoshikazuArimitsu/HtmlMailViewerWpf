@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.16] - 2022-12-30
+
+- 初期化時の `Cannot convert '<null>' from type '<null>' to type 'System.Uri' for...` 警告抑止
+
 ## [0.0.15] - 2022-11-11
 
 ### Changed
 
-- <meta> タグの Content-Type での指定Encodingに対応
+- <meta> タグの Content-Type での指定Encodingに対応Cannot convert '<null>' from type '<null>' to type 'System.Uri' for
 	- unicode
 	- iso-2022-jp
 	- shift_jis
