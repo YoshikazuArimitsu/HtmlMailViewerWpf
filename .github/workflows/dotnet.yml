@@ -33,8 +33,8 @@ jobs:
       - name: GitHub Package Authorization
         run: dotnet nuget add source --username YoshikazuArimitsu --password "$env:PACKAGE_TOKEN" --store-password-in-clear-text --name github "https://nuget.pkg.github.com/YoshikazuArimitsu/index.json"
 
-      - name: Publish GitHub
-        run: dotnet nuget push "artifacts/HtmlMailControlWpf.0.0.16.nupkg" --api-key "$env:PACKAGE_TOKEN" --source "github"
+      #- name: Publish GitHub
+      #  run: dotnet nuget push "artifacts/HtmlMailControlWpf.0.0.16.nupkg" --api-key "$env:PACKAGE_TOKEN" --source "github"
 
       - name: Publish to NuGet
         run: dotnet nuget push "artifacts/HtmlMailControlWpf.0.0.16.nupkg" --api-key "$env:PACKAGE_TOKEN_NUGET" --source https://api.nuget.org/v3/index.json
