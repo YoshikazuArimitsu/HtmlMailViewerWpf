@@ -21,7 +21,9 @@ HTML 形式のデータを持つ Email ファイル(.eml) を内部で展開し�
             SourceType={"Binding SourceType}"}
             EmlFile="{Binding EmlFile}"
             Patterns="{Binding LinkPatterns}"
-            LinkClicked="EmlView_LinkClicked"/>
+            EnableContextMenu="{Binding EnableContextMenu}"
+            LinkClicked="EmlView_LinkClicked"
+            />
     </Grid>
 </Window>
 ```
@@ -32,4 +34,5 @@ HTML 形式のデータを持つ Email ファイル(.eml) を内部で展開し�
 | EmlFile      | eml ファイルのパス                         |
 | Body         | テキストデータ(SourceType=BodyText/BodyHtml) |
 | Patterns     | リンクに差し替える文字列パターン(string[]) |
+| EnableContextMenu  | 右クリックメニュー有効かどうか(bool) |
 | LinkClicked  | リンククリック時のコールバック             |
