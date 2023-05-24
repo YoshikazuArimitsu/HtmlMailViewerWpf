@@ -11,5 +11,6 @@ namespace SampleApp
         public string? EmlFile { get; set; }
         public string? Body { get; set; }
         public string[]? LinkPatterns { get; set; }
+        public bool EnableContextMenu { get; set; } = true;
     }
 }

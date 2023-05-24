@@ -109,6 +109,19 @@ namespace SampleApp
             }
         }
 
+        public bool _enableContextMenu = true;
+        public bool EnableContextMenu
+        {
+            get
+            {
+                return _enableContextMenu;
+            }
+            set
+            {
+                _enableContextMenu = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public MainWindowViewModel(
             IOptions<AppSettings> settings,
@@ -122,6 +135,7 @@ namespace SampleApp
             Body = _settings.Body;
             LinkPatterns = _settings.LinkPatterns;
             LinkPatternsStr = string.Join(",", LinkPatterns ?? new string[0]);
+            EnableContextMenu = _settings.EnableContextMenu;
         }
     }
 }
