@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         private Task<string> _embedScriptId;
         private HtmlMailControlHostedObject _hostedObject;
         private Content _content;
+        private bool _enableContextMenu = true;
 
         /// <summary>
         /// 動作モード
@@ -232,6 +233,22 @@ document.addEventListener('DOMContentLoaded', () => {
             DependencyProperty.Register("Patterns", typeof(string[]), typeof(HtmlMailControl),
                 new FrameworkPropertyMetadata(new string[0], new PropertyChangedCallback(OnPatternChanged)));
 
+        public bool EnableContextMenu
+        {
+            get
+            {
+                return (bool)GetValue(EnableContextMenuProperty);
+            }
+            set
+            {
+                SetValue(EnableContextMenuProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty EnableContextMenuProperty =
+            DependencyProperty.Register("EnableContextMenu", typeof(bool), typeof(HtmlMailControl),
+                new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnSettingChanged)));
+
         /// <summary>
         /// 置換リンクを踏んだ時のイベント
         /// </summary>
@@ -317,6 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             webView.CoreWebView2.AddHostObjectToScript("class", _hostedObject);
+            webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = _enableContextMenu;
             webView.EnsureCoreWebView2Async();
             updateEmbedScript();
         }
@@ -407,6 +425,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        /// <summary>
+        /// その他設定変更イベント
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
+        private static void OnSettingChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            HtmlMailControl ctrl = obj as HtmlMailControl;
+
+            if (ctrl != null && ctrl.webView.CoreWebView2 != null)
+            {
+                // コンテキストメニュー設定変更
+                ctrl.webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = ctrl.EnableContextMenu;
+                ctrl.updateEmbedScript();
+                ctrl.webView.Reload();
+            }
+        }
 
     }
 }

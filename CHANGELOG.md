@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.17] - 2023-05-24
+
+- コンテキストメニューの有効/無効切り替え設定に対応
+
 ## [0.0.16] - 2022-12-30
 
 - 初期化時の `Cannot convert '<null>' from type '<null>' to type 'System.Uri' for...` 警告抑止

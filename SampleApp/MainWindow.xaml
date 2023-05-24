@@ -18,6 +18,7 @@
             EmlFile="{Binding EmlFile}"
             Body="{Binding Body}"
             Patterns="{Binding LinkPatterns}"
+            EnableContextMenu="{Binding EnableContextMenu}"
             LinkClicked="EmlView_LinkClicked" Margin="0,0,20,0"/>
         
         <StackPanel
@@ -42,6 +43,8 @@
             <Label>LinkPatterns</Label>
             <TextBox Text="{Binding LinkPatternsStr, Mode=TwoWay}"/>
 
+            <Label>EnableContextMenu</Label>
+            <CheckBox IsChecked="{Binding EnableContextMenu, Mode=TwoWay}" Content="右クリックメニューを有効化する"/>
         </StackPanel>
     </Grid>
 </Window>
