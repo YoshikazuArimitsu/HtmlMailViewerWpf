@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.18] - 0203-06-19
+
+- EnableContextMenu のデフォルト値指定が効かない問題修正
+
 ## [0.0.17] - 2023-05-24
 
 - コンテキストメニューの有効/無効切り替え設定に対応
