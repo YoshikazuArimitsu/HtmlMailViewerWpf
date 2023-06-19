@@ -136,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         private Task<string> _embedScriptId;
         private HtmlMailControlHostedObject _hostedObject;
         private Content _content;
-        private bool _enableContextMenu = true;
 
         /// <summary>
         /// 動作モード
@@ -334,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         private void WebView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
         {
             webView.CoreWebView2.AddHostObjectToScript("class", _hostedObject);
-            webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = _enableContextMenu;
+            webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = EnableContextMenu;
             webView.EnsureCoreWebView2Async();
             updateEmbedScript();
         }
